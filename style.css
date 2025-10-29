@@ -1,0 +1,512 @@
+/* --- Thiết lập Chung --- */
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #333; 
+    color: #fff;
+    font-size: 16px;
+}
+* {
+    box-sizing: border-box; 
+}
+
+/* --- Cấu trúc Layout (chia 2 cột) --- */
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* --- Phần Sidebar (Bên trái) --- */
+.sidebar {
+    width: 300px;
+    padding: 30px 40px;
+    background-color: #3f3f3f; 
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+    line-height: 1.4;
+}
+
+.logo-text {
+    font-family: 'Playfair Display', serif; 
+    font-size: 2em;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.intro-text {
+    font-size: 0.9em;
+    color: #aaa;
+    border-bottom: 1px solid #555;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.sidebar-section {
+    margin-bottom: 25px;
+}
+
+.section-title {
+    font-size: 1.1em;
+    color: #e0e0e0;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.sidebar-section p, .social-link p, .contact-info p {
+    font-size: 0.9em;
+    color: #888;
+}
+
+.social-link {
+    margin-top: 30px;
+}
+
+.email-text, .copyright {
+    color: #ccc;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+/* --- Phần Nội dung Chính (Bên phải) --- */
+.main-content {
+    flex-grow: 1;
+    background-color: #222; 
+}
+
+/* Thanh Header (Phần màu xanh mint) */
+.header-bar {
+    background-color: #c6d4cf; 
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #333;
+    font-weight: 400;
+    font-size: 0.9em;
+    text-transform: uppercase;
+}
+
+.brand-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5em;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+/* --- Khu vực Gallery (Xếp chồng) --- */
+.gallery-area {
+    padding: 30px;
+}
+
+.image-stack-container {
+    position: relative;
+    height: 600px; 
+    margin-bottom: 20px;
+}
+
+/* --- Ô LỚN Cố Định (Lớp dưới) --- */
+.large-image-box {
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    background-color: #000;
+    z-index: 10; 
+}
+
+/* Ảnh lớn: FIX GIẬT LAG khi zoom */
+.large-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    opacity: 0.8; 
+    
+    will-change: transform; 
+    transform-origin: center center; 
+    
+    transform: scale(1.0); 
+    animation: zoomImage 10s infinite alternate ease-in-out; 
+}
+
+/* Chữ tiêu đề: Nhấp nháy nhẹ */
+.image-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5em; 
+    font-weight: 900;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.9);
+    text-align: center;
+    line-height: 1;
+    padding: 15px 30px; 
+    background: rgba(0, 0, 0, 0.4); 
+    border-radius: 5px; 
+    animation: blinkText 2s infinite alternate; 
+}
+.image-subtitle {
+    display: none; 
+}
+
+
+/* --- Ô nhỏ Trình Chiếu Ảnh (Lớp trên - Đè lên) --- */
+.slider-box {
+    position: absolute; 
+    bottom: 20px; 
+    right: 20px; 
+    z-index: 20; 
+    
+    width: 350px; 
+    background-color: #3f3f3f; 
+    box-shadow: -5px 5px 20px rgba(0, 0, 0, 0.7);
+    border-radius: 5px; 
+    overflow: hidden; 
+}
+
+.featured-tag {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #e74c3c; 
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 0.8em;
+    font-weight: bold;
+    z-index: 30;
+}
+
+/* Khu vực ảnh trình chiếu */
+.slideshow-container {
+    position: relative;
+    width: 100%; 
+    height: 200px; 
+    overflow: hidden;
+    margin: 0;
+    border-radius: 5px; 
+}
+
+.slide {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0; 
+    transition: opacity 1.5s ease-in-out; 
+}
+
+.active-slide {
+    opacity: 1; 
+}
+
+/* Nút TỚI/LUI */
+.prev-btn, .next-btn {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    z-index: 30;
+}
+
+.next-btn {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+.prev-btn {
+    left: 0;
+    border-radius: 0 3px 3px 0;
+}
+.prev-btn:hover, .next-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+
+/* Thông tin và Nút Hành động trong Slider Box */
+.slider-info {
+    padding: 20px 30px 10px;
+    text-align: left;
+}
+.template-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2em;
+    color: #fff;
+    margin: 0 0 5px 0;
+}
+.template-desc {
+    font-size: 1.2em;
+    color: #ccc;
+    margin: 0 0 10px 0;
+}
+.template-sub-desc {
+    font-size: 0.9em;
+    color: #aaa;
+    border-bottom: 1px solid #444;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.action-buttons {
+    padding: 0 30px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 15px;
+}
+
+.demo-btn, .download-btn {
+    flex-grow: 1;
+    background-color: #66cdaa;
+    color: #333;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: bold;
+    border-radius: 3px;
+}
+
+.download-btn {
+    background-color: #2c3e50; 
+    color: #fff;
+}
+
+.demo-btn:hover { background-color: #8ce8c6; }
+.download-btn:hover { background-color: #34495e; }
+
+.posted-date {
+    font-size: 0.8em;
+    color: #888;
+    padding: 0 30px 20px;
+    margin-bottom: 0;
+}
+
+/* --- KEYFRAMES (Animation) --- */
+@keyframes zoomImage {
+    0% { transform: scale(1.0); }
+    100% { transform: scale(1.50); } 
+}
+
+@keyframes blinkText {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; } 
+    100% { opacity: 1; }
+}
+
+
+/* ======================================= */
+/* --- PHẦN MỚI 1: Bộ Sưu Tập Ký Ức (Bố cục POLAROID) --- */
+/* ======================================= */
+.detailed-gallery-section {
+    padding: 60px 30px; 
+    background-color: #222; 
+    text-align: center;
+    border-top: 1px solid #444;
+}
+
+.gallery-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #66cdaa; 
+    margin: 40px 0;
+    text-transform: uppercase;
+}
+
+/* Container chứa tất cả các ảnh */
+.polaroid-container {
+    position: relative;
+    width: 90%; 
+    max-width: 1200px;
+    height: 650px; /* Chiều cao cố định để chứa bố cục */
+    margin: 0 auto 50px auto; 
+    background-color: #333; /* Màu nền nhạt giả định cho khu vực dán ảnh */
+    border-radius: 10px;
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5); /* Tạo hiệu ứng lõm vào */
+}
+
+/* Định dạng chung cho các ảnh Polaroid */
+.polaroid {
+    position: absolute;
+    width: 250px;
+    background: #fff; /* Nền trắng như ảnh Polaroid */
+    padding: 10px 10px 30px 10px; /* Tạo khung dưới lớn hơn */
+    box-shadow: 0 15px 15px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    transition: all 0.5s ease-in-out; 
+    cursor: pointer;
+}
+
+.polaroid:hover {
+    z-index: 50; /* Đưa ảnh lên trên cùng khi hover */
+    transform: scale(1.1) rotate(0deg) !important; /* Phóng to và duỗi thẳng */
+    box-shadow: 0 25px 35px rgba(0, 0, 0, 0.8);
+}
+
+.polaroid img {
+    width: 100%;
+    height: 180px; /* Chiều cao ảnh */
+    object-fit: cover;
+    display: block;
+}
+
+/* Định vị và xoay ngẫu nhiên TỪNG BỨC ẢNH */
+.p-item-1 {
+    top: 50px;
+    left: 80px;
+    transform: rotate(-8deg);
+}
+
+.p-item-2 {
+    top: 150px;
+    left: 350px;
+    width: 300px; /* Ảnh lớn hơn */
+    height: auto;
+    transform: rotate(5deg);
+}
+
+.p-item-3 {
+    bottom: 50px;
+    left: 20px;
+    transform: rotate(3deg);
+}
+
+.p-item-4 {
+    top: 80px;
+    right: 50px;
+    width: 320px; 
+    transform: rotate(10deg);
+}
+
+.p-item-5 {
+    bottom: 100px;
+    right: 150px;
+    transform: rotate(-4deg);
+}
+
+/* Style cho chữ trang trí (tùy chọn) */
+.polaroid-text {
+    position: absolute;
+    font-family: 'Playfair Display', cursive; /* Font chữ */
+    font-size: 2.5em;
+    color: #fff;
+    font-weight: 700;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    z-index: 5;
+}
+
+.text-top-right {
+    top: 20px;
+    right: 150px;
+    transform: rotate(15deg);
+    color: #66cdaa;
+}
+
+.text-bottom-center {
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-5deg);
+    font-size: 1.5em;
+    color: #e74c3c;
+}
+
+
+/* ======================================= */
+/* --- PHẦN MỚI 2: THỐNG KÊ LỚP --- */
+/* ======================================= */
+
+.stats-section {
+    padding: 60px 30px;
+    background-color: #333; 
+}
+
+.team-title {
+    margin-top: 60px;
+    border-top: 1px dashed #555;
+    padding-top: 40px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    text-align: center;
+}
+
+.stat-item {
+    padding: 20px;
+    background-color: #3f3f3f;
+    border-radius: 5px;
+}
+
+.stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 4em;
+    font-weight: 900;
+    color: #e74c3c; 
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+.stat-label {
+    font-size: 1em;
+    text-transform: uppercase;
+    color: #ccc;
+    font-weight: 700;
+}
+
+/* Team Grid (Giáo viên và Ban cán sự) */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.team-member {
+    background-color: #3f3f3f;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.member-photo {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%; 
+    margin-bottom: 15px;
+    border: 4px solid #66cdaa;
+}
+
+.member-name {
+    font-size: 1.5em;
+    color: #fff;
+    margin: 5px 0;
+}
+
+.member-role {
+    font-size: 0.9em;
+    color: #66cdaa;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.member-quote {
+    font-size: 0.9em;
+    color: #aaa;
+    font-style: italic;
+}
